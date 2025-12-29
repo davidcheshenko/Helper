@@ -6,6 +6,6 @@ target 'Helper' do
   use_frameworks!
 
   # Pods for Helper
-  pod 'SnapKit', '~> 5.6'
+  pod 'SnapKit'
 
 end
