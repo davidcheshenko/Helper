@@ -7,5 +7,6 @@ target 'Helper' do
 
   # Pods for Helper
   pod 'SnapKit'
+  pod 'SDWebImage'
 
 end
