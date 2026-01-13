@@ -5,6 +5,7 @@
 //  Created by David Cheshenko on 13.01.26.
 //
 
+
 import UIKit
 
 class MainTabBarController: UITabBarController {
@@ -16,45 +17,40 @@ class MainTabBarController: UITabBarController {
 
     private func setupTabs() {
 
-        // 1. Создаём экраны
-        let newsVC = NewsViewController()
-        let mapVC = MapViewController()
-        let weatherVC = WeatherViewController()
-        let profileVC = ProfileViewController()
+        let newsVC = NewsViewController(viewModel: NewsViewModel())
+        let mapVC = MapViewController(viewModel: MapViewModel())
+        let weatherVC = WeatherViewController(viewModel: WeatherViewModel())
+        let profileVC = ProfileViewController(viewModel: ProfileViewModel())
 
-        // 2. Оборачиваем в NavigationController
         let newsNav = UINavigationController(rootViewController: newsVC)
         let mapNav = UINavigationController(rootViewController: mapVC)
         let weatherNav = UINavigationController(rootViewController: weatherVC)
         let profileNav = UINavigationController(rootViewController: profileVC)
 
-        // 3. Кнопки TabBar
         newsNav.tabBarItem = UITabBarItem(
-            title: "newsItem",
-            image: UIImage(systemName: "newsItem"),
+            title: "News",
+            image: UIImage(named: "newsItem"),
             tag: 0
         )
 
         mapNav.tabBarItem = UITabBarItem(
-            title: "mapItem",
-            image: UIImage(systemName: "mapItem"),
+            title: "Map",
+            image: UIImage(named: "mapItem"),
             tag: 1
         )
 
         weatherNav.tabBarItem = UITabBarItem(
-            title: "weatherItem",
-            image: UIImage(systemName: "weatherItem"),
+            title: "Weather",
+            image: UIImage(named: "weatherItem"),
             tag: 2
         )
 
         profileNav.tabBarItem = UITabBarItem(
-            title: "profileItem",
-            image: UIImage(systemName: "profileItem"),
+            title: "Profile",
+            image: UIImage(named: "profileItem"),
             tag: 3
         )
 
-        // 4. Добавляем вкладки
         viewControllers = [newsNav, mapNav, weatherNav, profileNav]
     }
 }
-
