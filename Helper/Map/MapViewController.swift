@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import MapKit
 
 class MapViewController: UIViewController {
     
     // MARK: Private properties
     
-    private let viewModel: IMapViewModel
+    private var viewModel: IMapViewModel
+    private let mapView = MKMapView()
     
     // MARK: Lifecycle
     
@@ -28,7 +30,39 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemGreen
-                title = "map"
+        title = "map"
+        setupUI()
+        bindViewModel()
     }
 }
+
+private extension MapViewController {
+
+    func setupUI() {
+        title = "Map"
+        view.backgroundColor = .systemBackground
+
+        mapView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(mapView)
+
+        NSLayoutConstraint.activate([
+            mapView.topAnchor.constraint(equalTo: view.topAnchor),
+            mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+    
+    func bindViewModel() {
+           viewModel.onRegionChanged = { [weak self] region in
+               self?.mapView.setRegion(region, animated: true)
+           }
+
+           viewModel.viewDidLoad()
+       }
+}
+
+  
+
+
+
