@@ -7,9 +7,7 @@
 
 import Foundation
 import MapKit
-
-protocol IMapViewModel {
+protocol IMapViewModel: AnyObject {
     
-    var onRegionChanged: ((MKCoordinateRegion) -> Void)? { get set }
-        func viewDidLoad()
+    var setRegion: ((MKCoordinateRegion) -> Void)? { get set }
 }

@@ -7,6 +7,7 @@
 
 import UIKit
 import MapKit
+import SnapKit
 
 class MapViewController: UIViewController {
     
@@ -27,39 +28,32 @@ class MapViewController: UIViewController {
     }
     
     // MARK: Public methods
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "map"
         setupUI()
-        bindViewModel()
+        bind()
     }
 }
 
 private extension MapViewController {
 
     func setupUI() {
-        title = "Map"
         view.backgroundColor = .systemBackground
-
         mapView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(mapView)
 
-        NSLayoutConstraint.activate([
-            mapView.topAnchor.constraint(equalTo: view.topAnchor),
-            mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
+        mapView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
-    func bindViewModel() {
-           viewModel.onRegionChanged = { [weak self] region in
-               self?.mapView.setRegion(region, animated: true)
-           }
-
-           viewModel.viewDidLoad()
-       }
+    func bind() {
+        viewModel.setRegion = { [weak self] region in
+            self?.mapView.setRegion(region, animated: true)
+        }
+    }
 }
 
   
