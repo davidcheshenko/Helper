@@ -31,27 +31,20 @@ class MapViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "map"
         setupUI()
-        bind()
     }
 }
 
 private extension MapViewController {
 
     func setupUI() {
+        title = "map"
         view.backgroundColor = .systemBackground
         mapView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(mapView)
 
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-        }
-    }
-    
-    func bind() {
-        viewModel.setRegion = { [weak self] region in
-            self?.mapView.setRegion(region, animated: true)
         }
     }
 }

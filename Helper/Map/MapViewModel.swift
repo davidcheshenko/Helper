@@ -9,8 +9,6 @@ import Foundation
 import MapKit
 
 class MapViewModel: IMapViewModel {
-    
-    var setRegion: ((MKCoordinateRegion) -> Void)?
   
 }
 

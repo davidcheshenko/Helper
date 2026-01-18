@@ -6,8 +6,7 @@
 //
 
 import Foundation
-import MapKit
+
 protocol IMapViewModel: AnyObject {
     
-    var setRegion: ((MKCoordinateRegion) -> Void)? { get set }
 }
