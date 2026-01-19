@@ -38,7 +38,7 @@ class MapViewController: UIViewController {
 private extension MapViewController {
 
     func setupUI() {
-        title = "map"
+        title = Constraints.map
         view.backgroundColor = .systemBackground
         mapView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(mapView)
