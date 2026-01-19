@@ -8,5 +8,6 @@
 import Foundation
 
 class MapViewModel: IMapViewModel {
-    
+  
 }
+

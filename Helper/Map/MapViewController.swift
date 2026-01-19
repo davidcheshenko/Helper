@@ -6,12 +6,15 @@
 //
 
 import UIKit
+import MapKit
+import SnapKit
 
 class MapViewController: UIViewController {
     
     // MARK: Private properties
     
     private let viewModel: IMapViewModel
+    private let mapView = MKMapView()
     
     // MARK: Lifecycle
     
@@ -25,10 +28,28 @@ class MapViewController: UIViewController {
     }
     
     // MARK: Public methods
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemGreen
-                title = "map"
+        setupUI()
     }
 }
+
+private extension MapViewController {
+
+    func setupUI() {
+        title = "map"
+        view.backgroundColor = .systemBackground
+        mapView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(mapView)
+
+        mapView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+}
+
+  
+
+
+

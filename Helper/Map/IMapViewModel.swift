@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol IMapViewModel {
+protocol IMapViewModel: AnyObject {
     
 }
