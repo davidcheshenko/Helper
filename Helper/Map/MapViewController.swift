@@ -13,7 +13,7 @@ class MapViewController: UIViewController {
     
     // MARK: Private properties
     
-    private var viewModel: IMapViewModel
+    private let viewModel: IMapViewModel
     private let mapView = MKMapView()
     
     // MARK: Lifecycle
