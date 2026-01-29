@@ -8,9 +8,49 @@
 import Foundation
 import CoreLocation
 
-class LocationService: ILocationService {
+final class LocationService: NSObject, ILocationService {
     
-    func getCurrentUserLocation() -> CLLocation {
-        .init()
+    var lastLocation: CLLocationCoordinate2D?
+    
+    private let locationManager = CLLocationManager()
+    
+    override init() {
+        super.init()
+        locationManager.delegate = self
     }
+    
+    func requestPermissions() {
+        switch locationManager.authorizationStatus {
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        default:
+            break
+        }
+    }
+    
+    func isGeoAllowedAndShowAlertIfNeeded() -> Bool {
+        let status = locationManager.authorizationStatus
+        return status == .authorizedWhenInUse || status == .authorizedAlways
+    }
+}
+
+extension LocationService: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .authorizedAlways, .authorizedWhenInUse:
+            manager.startUpdatingLocation()
+        default:
+            lastLocation = nil
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        lastLocation = locations.last?.coordinate
+    }
+    
+   /* func  locationManager(_ manager : CLLocationManager, didFailWithError error : Error) {
+        print("📍 Location Manager failed: \(error)")
+    }
+    */
 }

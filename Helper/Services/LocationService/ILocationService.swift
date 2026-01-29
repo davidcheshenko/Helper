@@ -10,5 +10,9 @@ import CoreLocation
 
 protocol ILocationService {
     
-    func getCurrentUserLocation() -> CLLocation
+    var lastLocation: CLLocationCoordinate2D? { get }
+    
+    func requestPermissions()
+    func isGeoAllowedAndShowAlertIfNeeded() -> Bool
+    //func getCurrentUserLocation() -> CLLocation
 }
