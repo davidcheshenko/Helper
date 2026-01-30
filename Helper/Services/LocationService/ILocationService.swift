@@ -14,5 +14,4 @@ protocol ILocationService {
     
     func requestPermissions()
     func isGeoAllowedAndShowAlertIfNeeded() -> Bool
-    //func getCurrentUserLocation() -> CLLocation
 }

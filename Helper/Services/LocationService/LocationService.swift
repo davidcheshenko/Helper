@@ -49,8 +49,7 @@ extension LocationService: CLLocationManagerDelegate {
         lastLocation = locations.last?.coordinate
     }
     
-   /* func  locationManager(_ manager : CLLocationManager, didFailWithError error : Error) {
+    func  locationManager(_ manager : CLLocationManager, didFailWithError error : Error) {
         print("📍 Location Manager failed: \(error)")
     }
-    */
 }
