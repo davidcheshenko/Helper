@@ -9,7 +9,18 @@
 import UIKit
 
 class MainTabBarController: UITabBarController {
-
+    
+    private let serviceFactory: IServiceFactory
+    
+    init(serviceFactory: IServiceFactory) {
+        self.serviceFactory = serviceFactory
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTabs()

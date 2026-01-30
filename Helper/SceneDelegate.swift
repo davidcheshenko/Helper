@@ -18,9 +18,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         options connectionOptions: UIScene.ConnectionOptions
     ) {
         guard let windowScene = scene as? UIWindowScene else { return }
+        let serviceFactory = ServiceFactory()
 
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = MainTabBarController()
+        window?.rootViewController = MainTabBarController(serviceFactory: serviceFactory)
         window?.makeKeyAndVisible()
     }
 
