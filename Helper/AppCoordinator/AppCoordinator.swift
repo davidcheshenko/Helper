@@ -37,11 +37,9 @@ final class AppCoordinator {
             
             navigationController = UINavigationController(rootViewController: viewController)
             navigationController.tabBarItem = UITabBarItem(title: tab.rawValue.capitalized, image: tab.image, tag: tab.hashValue)
+            navigationControllers.append(navigationController)
             
         }
-        
-        
-        
         tabBarController.viewControllers = navigationControllers
     }
 }
