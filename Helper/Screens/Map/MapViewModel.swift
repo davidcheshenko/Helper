@@ -9,10 +9,10 @@ import Foundation
 
 class MapViewModel: IMapViewModel {
     
-    private let locationService: LocationService
-    
-    init() {
-        self.locationService = LocationService()
-    }
+    private let locationService: ILocationService
+
+        init(locationService: ILocationService) {
+            self.locationService = locationService
+        }
 }
 
