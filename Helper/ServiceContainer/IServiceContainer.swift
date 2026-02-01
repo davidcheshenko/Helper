@@ -1,5 +1,5 @@
 //
-//  IServiceFactory.swift
+//  IServiceContainer.swift
 //  Helper
 //
 //  Created by David Cheshenko on 30.01.26.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol IServiceFactory {
+protocol IServiceContainer {
     
     var locationService: ILocationService { get }
 }
