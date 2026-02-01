@@ -8,7 +8,11 @@
 import Foundation
 
 class MapViewModel: IMapViewModel {
-  
-    private let locationService = LocationService()
+    
+    private let locationService: LocationService
+    
+    init() {
+        self.locationService = LocationService()
+    }
 }
 
