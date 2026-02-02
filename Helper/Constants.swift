@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Constraints {
+class Constants {
     
    static let map = "Map"
    static let news = "News"
