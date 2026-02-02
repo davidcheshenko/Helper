@@ -29,6 +29,6 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray
-        title = Constraints.profile
+        title = Constants.profile
     }
 }
