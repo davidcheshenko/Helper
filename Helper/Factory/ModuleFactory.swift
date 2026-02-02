@@ -20,7 +20,7 @@ class ModuleFactory: IModuleFactory {
     }
     
     func makeMapViewController() -> UIViewController {
-        MapViewController(viewModel: MapViewModel())
+        MapViewController(viewModel: MapViewModel(locationService: services.locationService))
     }
     
     func makeWeatherViewController() -> UIViewController {
