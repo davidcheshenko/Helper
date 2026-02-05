@@ -13,6 +13,7 @@ class MapViewController: UIViewController {
     
     // MARK: Private properties
     
+    private let mapButtonsView = MapButtonContainerView()
     private let viewModel: IMapViewModel
     private let mapView = MKMapView()
     
@@ -36,20 +37,27 @@ class MapViewController: UIViewController {
 }
 
 private extension MapViewController {
-
+    
     func setupUI() {
         title = Constants.map
         view.backgroundColor = .systemBackground
-        mapView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(mapView)
-
+        
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        view.addSubview(mapView)
+        view.addSubview(mapButtonsView)
+        
+        mapView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        mapButtonsView.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(16)
+            $0.width.equalTo(44)
+        }
     }
 }
-
-  
-
-
 
