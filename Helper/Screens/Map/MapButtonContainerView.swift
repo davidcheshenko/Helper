@@ -28,7 +28,6 @@ class MapButtonContainerView: UIView {
 private extension MapButtonContainerView {
     
     func configureUI() {
-        
         plusButton.setImage(UIImage(systemName: "plus"), for: .normal)
         minusButton.setImage(UIImage(systemName: "minus"), for: .normal)
         locationButton.setImage(UIImage(systemName: "location"), for: .normal)
@@ -37,6 +36,7 @@ private extension MapButtonContainerView {
             $0.backgroundColor = .white
             $0.tintColor = .black
             $0.layer.cornerRadius = 22
+            stackView.addArrangedSubview($0)
         }
         
         plusButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
@@ -46,22 +46,19 @@ private extension MapButtonContainerView {
         stackView.axis = .vertical
         stackView.spacing = 12
         stackView.alignment = .center
-        
+        }
+    
+    func configureLayout() {
         addSubview(stackView)
+        stackView.snp.makeConstraints {
+            $0.centerY.trailing.equalToSuperview()
+        }
         
         [plusButton, minusButton, locationButton].forEach {
             $0.snp.makeConstraints {
                 $0.size.equalTo(44)
             }
         }
-    }
-    
-    func configureLayout() {
-        stackView.snp.makeConstraints {
-            $0.centerY.trailing.equalToSuperview()
-        }
-        
-        [plusButton, minusButton, locationButton].forEach(stackView.addArrangedSubview)
     }
     
     @objc func plusButtonTapped() {
