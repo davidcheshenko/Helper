@@ -45,7 +45,6 @@ private extension MapButtonContainerView {
         stackView.axis = .vertical
         stackView.spacing = 12
         stackView.alignment = .center
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(stackView)
         
