@@ -29,29 +29,22 @@ class MapViewController: UIViewController {
     }
     
     // MARK: Public methods
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        configureUI()
     }
 }
 
 private extension MapViewController {
     
-    func setupUI() {
-        title = Constants.map
-        view.backgroundColor = .systemBackground
-        view.addSubview(mapView)
+    func configureUI() {
         
+        view.addSubview(mapView)
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        view.addSubview(mapView)
         view.addSubview(mapButtonsView)
-        
-        mapView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
         
         mapButtonsView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()

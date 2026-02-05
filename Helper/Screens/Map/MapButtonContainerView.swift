@@ -10,15 +10,16 @@ import UIKit
 class MapButtonContainerView: UIView {
 
     private let stackView = UIStackView()
-    private let plusButton = UIButton(type: .system)
-    private let minusButton = UIButton(type: .system)
-    private let locationButton = UIButton(type: .system)
+    private let plusButton = UIButton()
+    private let minusButton = UIButton()
+    private let locationButton = UIButton()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
         configureLayout()
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -49,10 +50,6 @@ private extension MapButtonContainerView {
         addSubview(stackView)
         
         [plusButton, minusButton, locationButton].forEach {
-            stackView.addArrangedSubview($0)
-        }
-        
-        [plusButton, minusButton, locationButton].forEach {
             $0.snp.makeConstraints {
                 $0.size.equalTo(44)
             }
@@ -63,6 +60,8 @@ private extension MapButtonContainerView {
         stackView.snp.makeConstraints {
             $0.centerY.trailing.equalToSuperview()
         }
+        
+        [plusButton, minusButton, locationButton].forEach(stackView.addArrangedSubview)
     }
     
     @objc func plusButtonTapped() {
