@@ -9,6 +9,8 @@ import UIKit
 
 class MapButtonContainerView: UIView {
 
+    //MARK: - Private properties
+    
     private let stackView = UIStackView()
     private let plusButton = UIButton()
     private let minusButton = UIButton()
@@ -46,17 +48,17 @@ private extension MapButtonContainerView {
         stackView.axis = .vertical
         stackView.spacing = 12
         stackView.alignment = .center
-        }
+    }
     
     func configureLayout() {
         addSubview(stackView)
         stackView.snp.makeConstraints {
-            $0.centerY.trailing.equalToSuperview()
+        $0.centerY.trailing.equalToSuperview()
         }
         
         [plusButton, minusButton, locationButton].forEach {
             $0.snp.makeConstraints {
-                $0.size.equalTo(44)
+            $0.size.equalTo(44)
             }
         }
     }
