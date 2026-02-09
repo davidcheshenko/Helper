@@ -59,9 +59,9 @@ private extension MapButtonContainerView {
         [plusButton, minusButton, locationButton].forEach {
             $0.snp.makeConstraints {
             $0.size.equalTo(44)
-            }
         }
     }
+}
     
     @objc func plusButtonTapped() {
         print("plusButtonTapped")
