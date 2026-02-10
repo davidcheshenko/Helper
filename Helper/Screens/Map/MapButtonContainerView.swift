@@ -57,8 +57,8 @@ private extension MapButtonContainerView {
         addSubview(stackView)
         
         stackView.snp.makeConstraints {
-                    $0.edges.equalToSuperview()
-                }
+            $0.edges.equalToSuperview()
+        }
         
         [plusButton, minusButton, locationButton].forEach {
             $0.snp.makeConstraints {
