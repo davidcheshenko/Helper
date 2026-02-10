@@ -11,13 +11,13 @@ import SnapKit
 
 class MapViewController: UIViewController {
     
-    // MARK: Private properties
+    // MARK: - Private properties
     
     private let mapButtonsView = MapButtonContainerView()
     private let viewModel: IMapViewModel
     private let mapView = MKMapView()
     
-    // MARK: Lifecycle
+    // MARK: - Lifecycle
     
     init(viewModel: IMapViewModel) {
         self.viewModel = viewModel
@@ -28,29 +28,27 @@ class MapViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: Public methods
+    // MARK: - Public methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
+        configureLayout()
     }
 }
 
 private extension MapViewController {
     
-    func configureUI() {
+    func configureLayout() {
         
-        view.addSubview(mapView)
+        [mapView, mapButtonsView].forEach(view.addSubview)
+        
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        view.addSubview(mapButtonsView)
         
         mapButtonsView.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(16)
-            $0.width.equalTo(44)
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(15)
         }
     }
 }
-

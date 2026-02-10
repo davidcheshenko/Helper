@@ -6,15 +6,19 @@
 //
 
 import UIKit
+import SnapKit
 
 class MapButtonContainerView: UIView {
-
+    
     //MARK: - Private properties
     
     private let stackView = UIStackView()
     private let plusButton = UIButton()
     private let minusButton = UIButton()
     private let locationButton = UIButton()
+    private let size = 44.0
+    
+    //MARK: - Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,38 +34,38 @@ class MapButtonContainerView: UIView {
 private extension MapButtonContainerView {
     
     func configureUI() {
+        stackView.axis = .vertical
+        stackView.spacing = 12
+        
         plusButton.setImage(UIImage(systemName: "plus"), for: .normal)
         minusButton.setImage(UIImage(systemName: "minus"), for: .normal)
         locationButton.setImage(UIImage(systemName: "location"), for: .normal)
-        
-        [plusButton, minusButton, locationButton].forEach {
-            $0.backgroundColor = .white
-            $0.tintColor = .black
-            $0.layer.cornerRadius = 22
-            stackView.addArrangedSubview($0)
-        }
         
         plusButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
         minusButton.addTarget(self, action: #selector(minusButtonTapped), for: .touchUpInside)
         locationButton.addTarget(self, action: #selector(locationButtonTapped), for: .touchUpInside)
         
-        stackView.axis = .vertical
-        stackView.spacing = 12
-        stackView.alignment = .center
+        [plusButton, minusButton, locationButton].forEach {
+            $0.backgroundColor = . white
+            $0.tintColor = . black
+            $0.layer.cornerRadius = size / 2
+            stackView.addArrangedSubview($0)
+        }
     }
     
     func configureLayout() {
         addSubview(stackView)
+        
         stackView.snp.makeConstraints {
-        $0.centerY.trailing.equalToSuperview()
-        }
+                    $0.edges.equalToSuperview()
+                }
         
         [plusButton, minusButton, locationButton].forEach {
             $0.snp.makeConstraints {
-            $0.size.equalTo(44)
+                $0.size.equalTo(size)
+            }
         }
     }
-}
     
     @objc func plusButtonTapped() {
         print("plusButtonTapped")
