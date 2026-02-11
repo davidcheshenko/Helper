@@ -73,12 +73,10 @@ private extension MapButtonContainerView {
     }
     
     @objc func plusButtonTapped() {
-        print("plusButtonTapped")
         plusButtonCompletion?()
     }
     
     @objc func minusButtonTapped() {
-        print("minusButtonTapped")
         minusButtonCompletion?()
     }
     

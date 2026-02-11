@@ -33,6 +33,7 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureLayout()
+        bind()
     }
 }
 
@@ -51,10 +52,9 @@ private extension MapViewController {
             $0.trailing.equalToSuperview().inset(15)
         }
         
-        bindButtons()
     }
     
-    func bindButtons() {
+    func bind() {
         mapButtonsView.plusButtonCompletion = { [weak self] in
             self?.zoomIn()
         }
@@ -64,14 +64,14 @@ private extension MapViewController {
         }
     }
     
-    private func zoomIn() {
+     func zoomIn() {
         var region = mapView.region
         region.span.latitudeDelta *= 0.5
         region.span.longitudeDelta *= 0.5
         mapView.setRegion(region, animated: true)
     }
     
-    private func zoomOut() {
+     func zoomOut() {
         var region = mapView.region
         region.span.latitudeDelta *= 2
         region.span.longitudeDelta *= 2
