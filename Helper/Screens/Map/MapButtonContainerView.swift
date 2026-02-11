@@ -17,6 +17,9 @@ class MapButtonContainerView: UIView {
     private let minusButton = UIButton()
     private let locationButton = UIButton()
     private let size = 44.0
+    var plusButtonCompletion: (() -> Void)?
+    var minusButtonCompletion: (() -> Void)?
+
     
     //MARK: - Lifecycle
     
@@ -69,10 +72,12 @@ private extension MapButtonContainerView {
     
     @objc func plusButtonTapped() {
         print("plusButtonTapped")
+        plusButtonCompletion?()
     }
     
     @objc func minusButtonTapped() {
         print("minusButtonTapped")
+        minusButtonCompletion?()
     }
     
     @objc func locationButtonTapped() {
