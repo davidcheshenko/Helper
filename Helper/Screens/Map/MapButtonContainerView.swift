@@ -10,6 +10,11 @@ import SnapKit
 
 class MapButtonContainerView: UIView {
     
+    //MARK: - Public properties
+    
+    var plusButtonCompletion: (() -> Void)?
+    var minusButtonCompletion: (() -> Void)?
+    
     //MARK: - Private properties
     
     private let stackView = UIStackView()
@@ -17,11 +22,6 @@ class MapButtonContainerView: UIView {
     private let minusButton = UIButton()
     private let locationButton = UIButton()
     private let size = 44.0
-    
-    //MARK: - Public properties
-    
-    var plusButtonCompletion: (() -> Void)?
-    var minusButtonCompletion: (() -> Void)?
     
     //MARK: - Lifecycle
     
