@@ -58,7 +58,7 @@ private extension MapViewController {
         mapButtonsView.plusButtonCompletion = { [weak self] in
             self?.zoomIn()
         }
-
+        
         mapButtonsView.minusButtonCompletion = { [weak self] in
             self?.zoomOut()
         }
@@ -70,7 +70,7 @@ private extension MapViewController {
         region.span.longitudeDelta *= 0.5
         mapView.setRegion(region, animated: true)
     }
-
+    
     private func zoomOut() {
         var region = mapView.region
         region.span.latitudeDelta *= 2
