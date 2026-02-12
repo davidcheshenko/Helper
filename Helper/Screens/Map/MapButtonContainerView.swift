@@ -10,6 +10,11 @@ import SnapKit
 
 class MapButtonContainerView: UIView {
     
+    //MARK: - Public properties
+    
+    var plusButtonCompletion: (() -> Void)?
+    var minusButtonCompletion: (() -> Void)?
+    
     //MARK: - Private properties
     
     private let stackView = UIStackView()
@@ -68,11 +73,11 @@ private extension MapButtonContainerView {
     }
     
     @objc func plusButtonTapped() {
-        print("plusButtonTapped")
+        plusButtonCompletion?()
     }
     
     @objc func minusButtonTapped() {
-        print("minusButtonTapped")
+        minusButtonCompletion?()
     }
     
     @objc func locationButtonTapped() {
