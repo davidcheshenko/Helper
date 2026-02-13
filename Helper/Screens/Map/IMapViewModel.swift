@@ -9,4 +9,6 @@ import Foundation
 
 protocol IMapViewModel: AnyObject {
     
+    func requestLocationPermission()
+    
 }

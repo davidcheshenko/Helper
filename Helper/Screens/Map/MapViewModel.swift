@@ -14,4 +14,8 @@ class MapViewModel: IMapViewModel {
     init(locationService: ILocationService) {
         self.locationService = locationService
     }
+    
+    func requestLocationPermission() {
+        locationService.requestPermissions()
+    }
 }

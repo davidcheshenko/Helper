@@ -34,6 +34,7 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         configureLayout()
         bind()
+        configureLocation()
     }
 }
 
@@ -77,4 +78,9 @@ private extension MapViewController {
         region.span.longitudeDelta *= 2
         mapView.setRegion(region, animated: true)
     }
+    func configureLocation() {
+        viewModel.requestLocationPermission()
+        mapView.showsUserLocation = true
+    }
+
 }
