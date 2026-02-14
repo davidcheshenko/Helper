@@ -6,8 +6,12 @@
 //
 
 import Foundation
+import CoreLocation
 
 class MapViewModel: IMapViewModel {
+    
+    var onLocationReady: ((CLLocationCoordinate2D) -> Void)?
+    var onLocationDenied: (() -> Void)?
     
     private let locationService: ILocationService
     
@@ -17,5 +21,17 @@ class MapViewModel: IMapViewModel {
     
     func requestLocationPermission() {
         locationService.requestPermissions()
+    }
+    func locationButtonTapped() {
+        
+        if locationService.isGeoAllowedAndShowAlertIfNeeded() {
+            
+            if let coordinate = locationService.lastLocation {
+                onLocationReady?(coordinate)
+            }
+            
+        } else {
+            onLocationDenied?()
+        }
     }
 }

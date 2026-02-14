@@ -14,6 +14,7 @@ class MapButtonContainerView: UIView {
     
     var plusButtonCompletion: (() -> Void)?
     var minusButtonCompletion: (() -> Void)?
+    var locationButtonCompletion: (() -> Void)?
     
     //MARK: - Private properties
     
@@ -81,6 +82,6 @@ private extension MapButtonContainerView {
     }
     
     @objc func locationButtonTapped() {
-        print("locationButtonTapped")
+        locationButtonCompletion?()
     }
 }

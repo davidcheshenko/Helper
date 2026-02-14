@@ -63,24 +63,42 @@ private extension MapViewController {
         mapButtonsView.minusButtonCompletion = { [weak self] in
             self?.zoomOut()
         }
+        
+        mapButtonsView.locationButtonCompletion = { [weak self] in
+            self?.viewModel.locationButtonTapped()
+        }
+        
+        viewModel.onLocationReady = { [weak self] coordinate in
+            self?.centerToLocation(coordinate)
+        }
+        
     }
     
-     func zoomIn() {
+    func zoomIn() {
         var region = mapView.region
         region.span.latitudeDelta *= 0.5
         region.span.longitudeDelta *= 0.5
         mapView.setRegion(region, animated: true)
     }
     
-     func zoomOut() {
+    func zoomOut() {
         var region = mapView.region
         region.span.latitudeDelta *= 2
         region.span.longitudeDelta *= 2
         mapView.setRegion(region, animated: true)
     }
+    
     func configureLocation() {
         viewModel.requestLocationPermission()
         mapView.showsUserLocation = true
     }
-
+    
+    private func centerToLocation(_ coordinate: CLLocationCoordinate2D) {
+        
+        let region = MKCoordinateRegion(
+            center: coordinate,
+            span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
+        
+        mapView.setRegion(region, animated: true)
+    }
 }
