@@ -10,7 +10,7 @@ import CoreLocation
 
 class MapViewModel: IMapViewModel {
     
-    var onLocationReady: ((CLLocationCoordinate2D) -> Void)?
+    var onUserLocation: ((CLLocationCoordinate2D?) -> Void)?
     var onLocationDenied: (() -> Void)?
     
     private let locationService: ILocationService
@@ -19,19 +19,15 @@ class MapViewModel: IMapViewModel {
         self.locationService = locationService
     }
     
-    func requestLocationPermission() {
+    func viewDidLoad() {
         locationService.requestPermissions()
     }
-    func locationButtonTapped() {
-        
-        if locationService.isGeoAllowedAndShowAlertIfNeeded() {
-            
-            if let coordinate = locationService.lastLocation {
-                onLocationReady?(coordinate)
-            }
-            
-        } else {
+    
+    func checkUserLocation() {
+        guard locationService.isGeoAllowedAndShowAlertIfNeeded() else {
             onLocationDenied?()
+            return
         }
+        onUserLocation?(locationService.lastLocation)
     }
 }

@@ -10,11 +10,9 @@ import CoreLocation
 
 protocol IMapViewModel: AnyObject {
     
-    var onLocationReady: ((CLLocationCoordinate2D) -> Void)? { get set }
+    var onUserLocation: ((CLLocationCoordinate2D?) -> Void)? { get set }
     var onLocationDenied: (() -> Void)? { get set }
     
-    func locationButtonTapped()
-    
-    func requestLocationPermission()
-    
+    func viewDidLoad()
+    func checkUserLocation()        
 }
