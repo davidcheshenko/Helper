@@ -32,12 +32,18 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
         configureLayout()
         bind()
+        viewModel.viewDidLoad()
     }
 }
 
 private extension MapViewController {
+    
+    func configureUI() {
+        mapView.showsUserLocation = true
+    }
     
     func configureLayout() {
         
@@ -62,19 +68,48 @@ private extension MapViewController {
         mapButtonsView.minusButtonCompletion = { [weak self] in
             self?.zoomOut()
         }
+        
+        mapButtonsView.locationButtonCompletion = { [weak self] in
+            self?.viewModel.checkUserLocation()
+        }
+        
+        viewModel.onUserLocation = { [weak self] coordinates in
+            guard let coordinates = coordinates else {
+                self?.showAlert()
+                return
+            }
+            self?.moveMapTo(coordinate: coordinates)
+        }
+        
+        viewModel.onLocationDenied = { [weak self] in
+            self?.showAlert()
+        }
     }
     
-     func zoomIn() {
+    func zoomIn() {
         var region = mapView.region
         region.span.latitudeDelta *= 0.5
         region.span.longitudeDelta *= 0.5
         mapView.setRegion(region, animated: true)
     }
     
-     func zoomOut() {
+    func zoomOut() {
         var region = mapView.region
         region.span.latitudeDelta *= 2
         region.span.longitudeDelta *= 2
         mapView.setRegion(region, animated: true)
+    }
+    
+    func moveMapTo(coordinate: CLLocationCoordinate2D) {
+        
+        let region = MKCoordinateRegion(
+            center: coordinate,
+            span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
+        
+        mapView.setRegion(region, animated: true)
+    }
+    
+    func showAlert() {
+        // здесь будет показан алерт пользователю
     }
 }

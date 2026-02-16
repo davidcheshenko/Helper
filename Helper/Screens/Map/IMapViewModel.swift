@@ -6,7 +6,13 @@
 //
 
 import Foundation
+import CoreLocation
 
 protocol IMapViewModel: AnyObject {
     
+    var onUserLocation: ((CLLocationCoordinate2D?) -> Void)? { get set }
+    var onLocationDenied: (() -> Void)? { get set }
+    
+    func viewDidLoad()
+    func checkUserLocation()        
 }
