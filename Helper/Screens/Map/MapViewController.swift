@@ -46,7 +46,6 @@ private extension MapViewController {
     }
     
     func configureLayout() {
-        
         [mapView, mapButtonsView].forEach(view.addSubview)
         
         mapView.snp.makeConstraints { make in

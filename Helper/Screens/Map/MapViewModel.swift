@@ -12,6 +12,7 @@ class MapViewModel: IMapViewModel {
     
     var onUserLocation: ((CLLocationCoordinate2D?) -> Void)?
     var onLocationDenied: (() -> Void)?
+    var onLocationAlert: ((LocationState) -> Void)?
     
     private let locationService: ILocationService
     
