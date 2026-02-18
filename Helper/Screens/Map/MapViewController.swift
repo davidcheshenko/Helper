@@ -74,14 +74,14 @@ private extension MapViewController {
         
         viewModel.onUserLocation = { [weak self] coordinates in
             guard let coordinates = coordinates else {
-                self?.showAlert()
+                self?.showAlert(type: .locationNotFound)
                 return
             }
             self?.moveMapTo(coordinate: coordinates)
         }
         
         viewModel.onLocationDenied = { [weak self] in
-            self?.showAlert()
+            self?.showAlert(type: .locationDenied)
         }
     }
     
@@ -108,7 +108,42 @@ private extension MapViewController {
         mapView.setRegion(region, animated: true)
     }
     
-    func showAlert() {
-        // здесь будет показан алерт пользователю
+    func showAlert(type: LocationState) {
+        
+        let alert: UIAlertController
+        
+        switch type {
+            
+        case .locationDenied:
+            
+            alert = UIAlertController(
+                title: nil,
+                message: "We use location to show your current position on the map.",
+                preferredStyle: .alert
+            )
+            
+            let settingsAction = UIAlertAction(
+                title: "Go to settings",
+                style: .default
+            ) { _ in
+                guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+                UIApplication.shared.open(url)
+            }
+            
+            alert.addAction(settingsAction)
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            
+        case .locationNotFound:
+            
+            alert = UIAlertController(
+                title: nil,
+                message: "Could not determine your location",
+                preferredStyle: .alert
+            )
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        }
+        
+        present(alert, animated: true)
     }
 }
