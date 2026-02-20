@@ -74,14 +74,14 @@ private extension MapViewController {
         
         viewModel.onUserLocation = { [weak self] coordinates in
             guard let coordinates = coordinates else {
-                self?.showAlert(type: .locationNotFound)
+                self?.showAlert(state: .locationNotFound)
                 return
             }
             self?.moveMapTo(coordinate: coordinates)
         }
         
         viewModel.onLocationDenied = { [weak self] in
-            self?.showAlert(type: .locationDenied)
+            self?.showAlert(state: .locationDenied)
         }
     }
     
@@ -108,42 +108,42 @@ private extension MapViewController {
         mapView.setRegion(region, animated: true)
     }
     
-    func showAlert(type: LocationState) {
+    func showAlert(state: LocationState) {
+        var message: String
+        var actions: [UIAlertAction] = []
         
-        let alert: UIAlertController
-        
-        switch type {
+        switch state {
             
         case .locationDenied:
             
-            alert = UIAlertController(
-                title: nil,
-                message: "We use location to show your current position on the map.",
-                preferredStyle: .alert
-            )
+            message = "We use location to show your current position on the map."
             
             let settingsAction = UIAlertAction(
-                title: "Go to settings",
+                title: state.title,
                 style: .default
             ) { _ in
                 guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
                 UIApplication.shared.open(url)
             }
             
-            alert.addAction(settingsAction)
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            actions.append(settingsAction)
             
         case .locationNotFound:
             
-            alert = UIAlertController(
-                title: nil,
-                message: "Could not determine your location",
-                preferredStyle: .alert
-            )
+            message = "Could not determine your location"
             
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         }
         
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        actions.append(cancelAction)
+        
+        let alert = UIAlertController(
+            title: nil,
+            message: state.message,
+            preferredStyle: .alert
+        )
+        
+        actions.forEach { alert.addAction($0) }
         present(alert, animated: true)
     }
 }

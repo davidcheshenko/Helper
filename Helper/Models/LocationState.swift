@@ -21,7 +21,7 @@ enum LocationState {
         }
     }
     
-    var buttonTitle: String? {
+    var title: String? {
         switch self {
         case .locationDenied:
             return "Go to settings"
