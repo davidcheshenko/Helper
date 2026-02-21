@@ -109,14 +109,11 @@ private extension MapViewController {
     }
     
     func showAlert(state: LocationState) {
-        var message: String
         var actions: [UIAlertAction] = []
         
         switch state {
             
         case .locationDenied:
-            
-            message = "We use location to show your current position on the map."
             
             let settingsAction = UIAlertAction(
                 title: state.title,
@@ -129,13 +126,11 @@ private extension MapViewController {
             actions.append(settingsAction)
             
         case .locationNotFound:
-            
-            message = "Could not determine your location"
+            break
             
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        actions.append(cancelAction)
+        actions.append(state.cancelAction)
         
         let alert = UIAlertController(
             title: nil,

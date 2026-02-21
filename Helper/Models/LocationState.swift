@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum LocationState {
     
@@ -28,5 +29,10 @@ enum LocationState {
         case .locationNotFound:
             return nil
         }
+    }
+    
+    var cancelAction: UIAlertAction {
+        UIAlertAction(title: "Cancel", style: .cancel)
+        
     }
 }
