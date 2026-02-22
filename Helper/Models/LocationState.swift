@@ -31,8 +31,8 @@ enum LocationState {
         }
     }
     
-    var cancelAction: UIAlertAction {
-        UIAlertAction(title: "Cancel", style: .cancel)
+    var cancelTitle: String? {
+        return "Сancel"
         
     }
 }

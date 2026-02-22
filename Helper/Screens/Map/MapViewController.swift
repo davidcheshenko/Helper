@@ -109,36 +109,17 @@ private extension MapViewController {
     }
     
     func showAlert(state: LocationState) {
-        var actions: [UIAlertAction] = []
+        let alert = UIAlertController(title: nil, message: state.message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: state.cancelTitle, style: .cancel))
         
-        switch state {
-            
-        case .locationDenied:
-            
-            let settingsAction = UIAlertAction(
-                title: state.title,
-                style: .default
-            ) { _ in
+        if state == .locationDenied {
+            let settingsAction = UIAlertAction(title: state.title, style: .default) { _ in
                 guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
                 UIApplication.shared.open(url)
             }
-            
-            actions.append(settingsAction)
-            
-        case .locationNotFound:
-            break
-            
+            alert.addAction(settingsAction)
         }
         
-        actions.append(state.cancelAction)
-        
-        let alert = UIAlertController(
-            title: nil,
-            message: state.message,
-            preferredStyle: .alert
-        )
-        
-        actions.forEach { alert.addAction($0) }
         present(alert, animated: true)
     }
 }
