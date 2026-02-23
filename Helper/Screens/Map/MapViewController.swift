@@ -46,7 +46,6 @@ private extension MapViewController {
     }
     
     func configureLayout() {
-        
         [mapView, mapButtonsView].forEach(view.addSubview)
         
         mapView.snp.makeConstraints { make in
@@ -75,14 +74,14 @@ private extension MapViewController {
         
         viewModel.onUserLocation = { [weak self] coordinates in
             guard let coordinates = coordinates else {
-                self?.showAlert()
+                self?.showAlert(state: .locationNotFound)
                 return
             }
             self?.moveMapTo(coordinate: coordinates)
         }
         
         viewModel.onLocationDenied = { [weak self] in
-            self?.showAlert()
+            self?.showAlert(state: .locationDenied)
         }
     }
     
@@ -109,7 +108,18 @@ private extension MapViewController {
         mapView.setRegion(region, animated: true)
     }
     
-    func showAlert() {
-        // здесь будет показан алерт пользователю
+    func showAlert(state: LocationState) {
+        let alert = UIAlertController(title: nil, message: state.message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: state.cancelTitle, style: .cancel))
+        
+        if state == .locationDenied {
+            let settingsAction = UIAlertAction(title: state.title, style: .default) { _ in
+                guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+                UIApplication.shared.open(url)
+            }
+            alert.addAction(settingsAction)
+        }
+        
+        present(alert, animated: true)
     }
 }
