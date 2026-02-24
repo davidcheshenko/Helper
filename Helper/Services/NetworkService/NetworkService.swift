@@ -7,13 +7,9 @@
 
 import Foundation
 
-final class NetworkService: NSObject, INetworkService {
-    
-    override init() {
-        super.init()
-    }
+final class NetworkService: INetworkService {
     
     func getNews() {
-        
+        // TODO: -
     }
 }
