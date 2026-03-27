@@ -1,5 +1,5 @@
 //
-//  DataNews.swift
+//  NewsResponse.swift
 //  Helper
 //
 //  Created by David Cheshenko on 25.03.26.
@@ -8,7 +8,7 @@
 import Foundation
 
 struct NewsResponse: Codable {
-    let status: String
+    let status: String?
     let totalResults: Int
     let articles: [Article]
 }
