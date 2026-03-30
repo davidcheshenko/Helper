@@ -14,7 +14,4 @@ class NewsViewModel: INewsViewModel {
     init(networkService: INetworkService) {
         self.networkService = networkService
     }
-    func loadNews() {
-        networkService.getNews()
-    }
 }
