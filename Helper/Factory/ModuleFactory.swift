@@ -16,7 +16,7 @@ class ModuleFactory: IModuleFactory {
     }
     
     func makeNewsViewController() -> UIViewController {
-        NewsViewController(viewModel: NewsViewModel())
+        NewsViewController(viewModel: NewsViewModel(networkService: services.networService))
     }
     
     func makeMapViewController() -> UIViewController {

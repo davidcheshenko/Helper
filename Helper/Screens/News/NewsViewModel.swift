@@ -9,4 +9,12 @@ import Foundation
 
 class NewsViewModel: INewsViewModel {
     
+    private let networkService: INetworkService
+    
+    init(networkService: INetworkService) {
+        self.networkService = networkService
+    }
+    func loadNews() {
+        networkService.getNews()
+    }
 }
