@@ -10,4 +10,5 @@ import Foundation
 final class ServiceContainer {
     
     let locationService = LocationService()
+    let networkService = NetworkService()
 }
