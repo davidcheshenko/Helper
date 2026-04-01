@@ -14,4 +14,15 @@ class NewsViewModel: INewsViewModel {
     init(networkService: INetworkService) {
         self.networkService = networkService
     }
+    func viewDidLoad() {
+        networkService.getNews { [weak self] result in
+            switch result {
+            case .success(let articles):
+                print(articles)
+                
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 }
