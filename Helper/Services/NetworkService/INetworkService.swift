@@ -8,5 +8,6 @@
 import Foundation
 
 protocol INetworkService {
+
     func getNews(completion: @escaping NewsCompletion )
 }

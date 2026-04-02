@@ -40,5 +40,6 @@ extension NetworkService {
                 completion(.success(data))
             }
         }
+        task.resume()
     }
 }

@@ -15,7 +15,7 @@ class NewsViewModel: INewsViewModel {
         self.networkService = networkService
     }
     func viewDidLoad() {
-        networkService.getNews { [weak self] result in
+        networkService.getNews { result in
             switch result {
             case .success(let articles):
                 print(articles)
