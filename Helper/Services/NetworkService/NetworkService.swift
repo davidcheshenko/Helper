@@ -10,12 +10,10 @@ import Foundation
 final class NetworkService: INetworkService {
     
     func getNews(completion: @escaping NewsCompletion) {
-        getRequest(URLString: Constants.newsBaseUrl + "everything?q=Apple&apiKey=" + Constants.apiKeyNews) { result in
-            
+        getRequest(url: Constants.newsBaseUrl + "everything?q=Apple&apiKey=" + Constants.apiKeyNews) { result in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
-                
             case .success(let data):
                 do {
                     let jsonData = try JSONDecoder().decode(NewsResponse.self, from: data)
@@ -28,11 +26,11 @@ final class NetworkService: INetworkService {
     }
 }
 
-extension NetworkService {
+private extension NetworkService {
     
-    private func getRequest(URLString: String, completion: @escaping ResultCompletion) {
-        guard let url = URL(string: URLString) else { return }
-        let task = URLSession.shared.dataTask(with: url) {data, response, error in
+    func getRequest(url: String, completion: @escaping ResultCompletion) {
+        guard let url = URL(string: url) else { return }
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
                 completion(.failure(error))
             }

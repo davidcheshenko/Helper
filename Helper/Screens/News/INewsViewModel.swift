@@ -8,5 +8,6 @@
 import Foundation
 
 protocol INewsViewModel {
+    
     func viewDidLoad()
 }
