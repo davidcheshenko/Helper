@@ -7,5 +7,7 @@
 
 import Foundation
 
-protocol INewsViewModel {    
+protocol INewsViewModel {
+    
+    func viewDidLoad()
 }

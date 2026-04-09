@@ -28,6 +28,6 @@ class NewsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        viewModel.viewDidLoad()
     }
 }
