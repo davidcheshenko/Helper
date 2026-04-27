@@ -25,6 +25,7 @@ class NewsViewModel: INewsViewModel {
         networkService.getNews { result in
             switch result {
             case .success(let articles):
+                guard let articles = articles else { return }
                 print(articles)
             case .failure(let error):
                 print(error)
