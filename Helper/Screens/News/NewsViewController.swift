@@ -10,7 +10,7 @@ import UIKit
 class NewsViewController: UIViewController {
     
     // MARK: Private properties
-    
+    private let articles: [Article] = []
     private let viewModel: INewsViewModel
     private let tableView = UITableView()
     
@@ -30,12 +30,15 @@ class NewsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.viewDidLoad()
-        setupTableView()
+        configureUI()
+        configureLayout()
     }
     
-    private func setupTableView() {
+    private func configureUI() {
         view.addSubview(tableView)
-        
+    }
+    
+    private func configureLayout() {
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -49,7 +52,7 @@ class NewsViewController: UIViewController {
 extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return articles.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -10,8 +10,6 @@ import SnapKit
 
 class NewsCell: UITableViewCell {
     
-    static let identifier = "NewsCell"
-
     //MARK: - Private properties
     
     private let titleLabel = UILabel()
