@@ -10,6 +10,7 @@ import UIKit
 class NewsViewController: UIViewController {
     
     // MARK: Private properties
+    
     private let articles: [Article] = []
     private let viewModel: INewsViewModel
     private let tableView = UITableView()
@@ -29,23 +30,9 @@ class NewsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.viewDidLoad()
         configureUI()
         configureLayout()
-    }
-    
-    private func configureUI() {
-        view.addSubview(tableView)
-    }
-    
-    private func configureLayout() {
-        tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
-        tableView.register(NewsCell.self, forCellReuseIdentifier: "cell")
-        tableView.dataSource = self
-        tableView.delegate = self
+        viewModel.viewDidLoad()
     }
 }
 
@@ -64,3 +51,18 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+private extension NewsViewController {
+    
+    func configureUI() {
+        view.addSubview(tableView)
+        tableView.register(NewsCell.self, forCellReuseIdentifier: "NewsCell")
+        tableView.dataSource = self
+        tableView.delegate = self
+    }
+    
+    func configureLayout() {
+        tableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+}
