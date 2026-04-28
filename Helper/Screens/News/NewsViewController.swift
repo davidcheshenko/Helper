@@ -11,7 +11,9 @@ class NewsViewController: UIViewController {
     
     // MARK: Private properties
     
+    private let articles: [Article] = []
     private let viewModel: INewsViewModel
+    private let tableView = UITableView()
     
     // MARK: Lifecycle
     
@@ -28,6 +30,39 @@ class NewsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
+        configureLayout()
         viewModel.viewDidLoad()
+    }
+}
+
+extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return articles.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? NewsCell else {
+            return UITableViewCell()
+        }
+        return cell
+    }
+}
+
+private extension NewsViewController {
+    
+    func configureUI() {
+        view.addSubview(tableView)
+        tableView.register(NewsCell.self, forCellReuseIdentifier: "NewsCell")
+        tableView.dataSource = self
+        tableView.delegate = self
+    }
+    
+    func configureLayout() {
+        tableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
 }

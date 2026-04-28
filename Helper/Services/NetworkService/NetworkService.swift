@@ -16,8 +16,8 @@ final class NetworkService: INetworkService {
                 completion(.failure(error))
             case .success(let data):
                 do {
-                    let jsonData = try JSONDecoder().decode(NewsResponse.self, from: data)
-                    completion(.success(jsonData))
+                    let respons = try JSONDecoder().decode(NewsResponse.self, from: data)
+                    completion(.success(respons.articles))
                 } catch {
                     completion(.failure(error))
                 }
