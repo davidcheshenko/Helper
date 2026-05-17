@@ -12,6 +12,11 @@ class NewsViewModel: INewsViewModel {
     // MARK: - Private properties
 
     private let networkService: INetworkService
+    private(set) var articles: [Article] = []
+    
+    // MARK: - Public properties
+    
+    var onNewsLoaded: (() -> Void)?
     
     // MARK: - Lifecycle
  
@@ -26,7 +31,8 @@ class NewsViewModel: INewsViewModel {
             switch result {
             case .success(let articles):
                 guard let articles = articles else { return }
-                print(articles)
+                self.articles = articles
+                self.onNewsLoaded?()
             case .failure(let error):
                 print(error)
             }

@@ -9,5 +9,8 @@ import Foundation
 
 protocol INewsViewModel {
     
+    var onNewsLoaded: (() -> Void)? { get set }
+    var articles: [Article] { get }
+    
     func viewDidLoad()
 }
