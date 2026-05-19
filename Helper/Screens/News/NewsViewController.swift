@@ -11,7 +11,7 @@ class NewsViewController: UIViewController {
     
     // MARK: Private properties
     
-    private let articles: [Article] = []
+    private var articles: [Article] = []
     private let viewModel: INewsViewModel
     private let tableView = UITableView()
     
@@ -32,6 +32,7 @@ class NewsViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         configureLayout()
+        bindViewModel()
         viewModel.viewDidLoad()
     }
 }
@@ -44,9 +45,12 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? NewsCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath) as? NewsCell else {
             return UITableViewCell()
         }
+        
+        cell.set(title: articles[indexPath.row].title)
+        cell.set(subtitle: articles[indexPath.row].description)
         return cell
     }
 }
@@ -63,6 +67,16 @@ private extension NewsViewController {
     func configureLayout() {
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+        }
+    }
+    
+    func bindViewModel() {
+        
+        viewModel.onNewsLoaded = { [weak self] articles in
+            DispatchQueue.main.async {
+                self?.articles = articles
+                self?.tableView.reloadData()
+            }
         }
     }
 }

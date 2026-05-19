@@ -7,7 +7,9 @@
 
 import Foundation
 
-protocol INewsViewModel {
+protocol INewsViewModel: AnyObject  {
+    
+    var onNewsLoaded: (([Article]) -> Void)? { get set }
     
     func viewDidLoad()
 }
