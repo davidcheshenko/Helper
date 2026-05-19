@@ -10,29 +10,29 @@ import Foundation
 class NewsViewModel: INewsViewModel {
     
     // MARK: - Private properties
-
+    
     private let networkService: INetworkService
-    private(set) var articles: [Article] = []
     
     // MARK: - Public properties
-    
-    var onNewsLoaded: (() -> Void)?
+    var articles: [Article]
+    var onNewsLoaded: (([Article]) -> Void )?
     
     // MARK: - Lifecycle
- 
-    init(networkService: INetworkService) {
+    
+    init(networkService: INetworkService, articles: [Article]) {
         self.networkService = networkService
+        self.articles = articles
     }
     
     // MARK: - Public methods
-
+    
     func viewDidLoad() {
         networkService.getNews { result in
             switch result {
             case .success(let articles):
                 guard let articles = articles else { return }
                 self.articles = articles
-                self.onNewsLoaded?()
+                self.onNewsLoaded?(articles)
             case .failure(let error):
                 print(error)
             }
