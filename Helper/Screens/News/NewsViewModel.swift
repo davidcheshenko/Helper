@@ -14,14 +14,12 @@ class NewsViewModel: INewsViewModel {
     private let networkService: INetworkService
     
     // MARK: - Public properties
-    var articles: [Article]
     var onNewsLoaded: (([Article]) -> Void )?
     
     // MARK: - Lifecycle
     
-    init(networkService: INetworkService, articles: [Article]) {
+    init(networkService: INetworkService) {
         self.networkService = networkService
-        self.articles = articles
     }
     
     // MARK: - Public methods
@@ -31,7 +29,6 @@ class NewsViewModel: INewsViewModel {
             switch result {
             case .success(let articles):
                 guard let articles = articles else { return }
-                self.articles = articles
                 self.onNewsLoaded?(articles)
             case .failure(let error):
                 print(error)

@@ -12,7 +12,7 @@ class NewsViewController: UIViewController {
     // MARK: Private properties
     
     private var articles: [Article] = []
-    private var viewModel: INewsViewModel
+    private let viewModel: INewsViewModel
     private let tableView = UITableView()
     
     // MARK: Lifecycle
@@ -49,9 +49,8 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
             return UITableViewCell()
         }
         
-        let article = articles[indexPath.row]
-        cell.set(title: article.title)
-        cell.set(subtitle: article.description)
+        cell.set(title: articles[indexPath.row].title)
+        cell.set(subtitle: articles[indexPath.row].description)
         return cell
     }
 }
