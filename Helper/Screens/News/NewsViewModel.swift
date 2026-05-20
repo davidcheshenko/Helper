@@ -39,6 +39,19 @@ class NewsViewModel: INewsViewModel {
             }
         }
     }
+    
+    func fetchImageData(from urlString: String?, completion: @escaping (Data?) -> Void) {
+        guard let urlString = urlString, let url = URL(string: urlString) else {
+            completion(nil)
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            DispatchQueue.main.async {
+                completion(data)
+            }
+        }.resume()
+    }
 }
 
 private extension NewsViewModel {

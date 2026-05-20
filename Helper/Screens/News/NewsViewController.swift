@@ -49,8 +49,24 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
             return UITableViewCell()
         }
         
-        cell.set(title: articles[indexPath.row].title)
-        cell.set(subtitle: articles[indexPath.row].description)
+        let article = articles[indexPath.row]
+        
+        cell.set(title: article.title)
+        cell.set(subtitle: article.description)
+        cell.set(image: nil)
+        
+        viewModel.fetchImageData(from: article.urlToImage) { [weak self] (rawData: Data?) in
+            DispatchQueue.main.async {
+                if let updateCell = self?.tableView.cellForRow(at: indexPath) as? NewsCell {
+                    if let data = rawData, let image = UIImage(data: data) {
+                        updateCell.set(image: image)
+                    } else {
+                        updateCell.set(image: nil)
+                    }
+                }
+            }
+        }
+        
         return cell
     }
 }
