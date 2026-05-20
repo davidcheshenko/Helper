@@ -33,7 +33,8 @@ class NewsCell: UITableViewCell {
     
     // MARK: - Public methods
     
-    func set(image: String?) {
+    func set(image: UIImage?) {
+        iconView.image = image
         iconView.isHidden = image == nil
     }
     
