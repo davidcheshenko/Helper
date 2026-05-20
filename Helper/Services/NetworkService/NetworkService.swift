@@ -29,7 +29,10 @@ final class NetworkService: INetworkService {
 private extension NetworkService {
     
     func getRequest(url: String, completion: @escaping ResultCompletion) {
-        guard let url = URL(string: url) else { return }
+        guard let url = URL(string: url) else {
+            let urlError = NSError(domain: "NetworkService", code: 400, userInfo: [NSLocalizedDescriptionKey: "Invalid Request URL"])
+            completion(.failure(urlError))
+            return }
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
                 completion(.failure(error))

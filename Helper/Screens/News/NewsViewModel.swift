@@ -15,6 +15,7 @@ class NewsViewModel: INewsViewModel {
     
     // MARK: - Public properties
     var onNewsLoaded: (([Article]) -> Void )?
+    var onError: ((String) -> Void)?
     
     // MARK: - Lifecycle
     
@@ -25,14 +26,30 @@ class NewsViewModel: INewsViewModel {
     // MARK: - Public methods
     
     func viewDidLoad() {
-        networkService.getNews { result in
+        networkService.getNews { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success(let articles):
                 guard let articles = articles else { return }
                 self.onNewsLoaded?(articles)
             case .failure(let error):
-                print(error)
+                let userMessage = self.mapErrorToMessage(error)
+                self.onError?(userMessage)
             }
         }
+    }
+}
+
+private extension NewsViewModel {
+    
+    func mapErrorToMessage(_ error: Error) -> String {
+        let nsError = error as NSError
+        
+        if nsError.domain == NSURLErrorDomain && nsError.code == NSURLErrorNotConnectedToInternet {
+            return "No internet connection"
+        }
+        
+        return "Failed to load news"
     }
 }
