@@ -73,10 +73,24 @@ private extension NewsViewController {
     func bindViewModel() {
         
         viewModel.onNewsLoaded = { [weak self] articles in
+            
             DispatchQueue.main.async {
                 self?.articles = articles
                 self?.tableView.reloadData()
             }
         }
+        viewModel.onError = { [weak self] errorMessage in
+            
+            DispatchQueue.main.async {
+                self?.showErrorAlert(message: errorMessage)
+            }
+        }
+    }
+    
+    func showErrorAlert(message: String) {
+        let alert = UIAlertController (title: "Error", message: message, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
     }
 }
