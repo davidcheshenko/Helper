@@ -45,28 +45,18 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath) as? NewsCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.NewsCellID, for: indexPath) as? NewsCell else {
             return UITableViewCell()
         }
         
-        let article = articles[indexPath.row]
+        cell.set(title: articles[indexPath.row].title)
+        cell.set(subtitle: articles[indexPath.row].description)
         
-        cell.set(title: article.title)
-        cell.set(subtitle: article.description)
-        cell.set(image: nil)
-        
-        viewModel.fetchImageData(from: article.urlToImage) { [weak self] (rawData: Data?) in
+        viewModel.fetchImageData(string: articles[indexPath.row].urlToImage) { data in
             DispatchQueue.main.async {
-                if let updateCell = self?.tableView.cellForRow(at: indexPath) as? NewsCell {
-                    if let data = rawData, let image = UIImage(data: data) {
-                        updateCell.set(image: image)
-                    } else {
-                        updateCell.set(image: nil)
-                    }
-                }
+                cell.set(image: UIImage(data: data))
             }
         }
-        
         return cell
     }
 }
@@ -87,23 +77,20 @@ private extension NewsViewController {
     }
     
     func bindViewModel() {
-        
         viewModel.onNewsLoaded = { [weak self] articles in
-            
             DispatchQueue.main.async {
                 self?.articles = articles
                 self?.tableView.reloadData()
             }
         }
-        viewModel.onError = { [weak self] errorMessage in
-            
+        viewModel.onError = { [weak self] message in
             DispatchQueue.main.async {
-                self?.showErrorAlert(message: errorMessage)
+                self?.showErrorAlert(message: message)
             }
         }
     }
     
-    func showErrorAlert(message: String) {
+    func showErrorAlert(message: String?) {
         let alert = UIAlertController (title: "Error", message: message, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         alert.addAction(cancelAction)

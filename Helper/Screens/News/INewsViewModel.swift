@@ -10,7 +10,7 @@ import Foundation
 protocol INewsViewModel: AnyObject  {
     
     var onNewsLoaded: (([Article]) -> Void)? { get set }
-    var onError: ((String) -> Void)? { get set }
-    func fetchImageData(from urlString: String?, completion: @escaping (Data?) -> Void)
+    var onError: ((String?) -> Void)? { get set }
+    func fetchImageData(string: String?, completion: @escaping (Data) -> Void)
     func viewDidLoad()
 }
