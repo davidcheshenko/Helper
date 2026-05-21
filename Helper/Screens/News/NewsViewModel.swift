@@ -15,7 +15,7 @@ class NewsViewModel: INewsViewModel {
     
     // MARK: - Public properties
     var onNewsLoaded: (([Article]) -> Void )?
-    var onError: ((String) -> Void)?
+    var onError: ((String?) -> Void)?
     
     // MARK: - Lifecycle
     
@@ -27,29 +27,36 @@ class NewsViewModel: INewsViewModel {
     
     func viewDidLoad() {
         networkService.getNews { [weak self] result in
-            guard let self = self else { return }
-            
             switch result {
             case .success(let articles):
-                guard let articles = articles else { return }
-                self.onNewsLoaded?(articles)
+                guard let articles = articles else {
+                    self?.onError?("Failed to load news")
+                    return
+                }
+                self?.onNewsLoaded?(articles)
             case .failure(let error):
-                let userMessage = self.mapErrorToMessage(error)
-                self.onError?(userMessage)
+                self?.onError?(self?.mapErrorToMessage(error: error))
             }
         }
+    }
+    
+    func fetchImageData(string: String?, completion: @escaping (Data) -> Void) {
+        guard let string = string, let url = URL(string: string) else { return }
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data else { return }
+            completion(data)
+        }
+        .resume()
     }
 }
 
 private extension NewsViewModel {
     
-    func mapErrorToMessage(_ error: Error) -> String {
-        let nsError = error as NSError
-        
-        if nsError.domain == NSURLErrorDomain && nsError.code == NSURLErrorNotConnectedToInternet {
+    func mapErrorToMessage(error: Error) -> String {
+        if (error as NSError).domain == NSURLErrorDomain && (error as NSError).code == NSURLErrorNotConnectedToInternet {
             return "No internet connection"
         }
-        
         return "Failed to load news"
     }
 }
