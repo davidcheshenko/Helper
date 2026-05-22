@@ -10,4 +10,5 @@ import Foundation
 protocol INetworkService {
 
     func getNews(completion: @escaping NewsCompletion )
+    func getWeather(completion: @escaping WeatherCompletion ) 
 }
