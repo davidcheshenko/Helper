@@ -8,15 +8,15 @@
 import Foundation
 
 struct WeatherResponse: Codable {
-    let name: String
-    let main: Main
-    let weather: [Weather]
+    let name: String?
+    let main: Main?
+    let weather: [Weather]?
 }
 
 struct Main: Codable {
-    let temp: Double
+    let temp: Double?
 }
 
 struct Weather: Codable {
-    let discription: String
+    let discription: String?
 }
