@@ -33,7 +33,8 @@ class NewsCell: UITableViewCell {
     
     // MARK: - Public methods
     
-    func set(image: String?) {
+    func set(image: UIImage?) {
+        iconView.image = image
         iconView.isHidden = image == nil
     }
     
@@ -52,7 +53,8 @@ private extension NewsCell {
     
     func configureUI() {
         iconView.layer.cornerRadius = 10
-        iconView.isHidden = false
+        iconView.isHidden = true
+        
         
         titleLabel.font = .boldSystemFont(ofSize: 16)
         titleLabel.numberOfLines = 2
