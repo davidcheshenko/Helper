@@ -17,6 +17,7 @@ class WeatherViewModel: IWeatherViewModel {
     
     var onWeatherLoaded: (([Weather]) -> Void)?
     var onError: ((String?) -> Void)?
+    var weatherResponse: WeatherResponse?
     
     // MARK: - Lifecycle
     
@@ -30,11 +31,12 @@ class WeatherViewModel: IWeatherViewModel {
         networkService.getWeather { [weak self] result in
             switch result {
             case .success(let response):
-                guard let weatherArray = response.weather else {
+                self?.weatherResponse = response 
+                guard let weather = response.weather else {
                     self?.onError?("Failed to load weather")
                     return
                 }
-                self?.onWeatherLoaded?(weatherArray)
+                self?.onWeatherLoaded?(weather)
             case .failure(let error):
                 self?.onError?(self?.mapErrorToMessage(error: error))
             }

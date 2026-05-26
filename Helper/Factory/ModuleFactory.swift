@@ -24,7 +24,7 @@ class ModuleFactory: IModuleFactory {
     }
     
     func makeWeatherViewController() -> UIViewController {
-        WeatherViewController(viewModel: WeatherViewModel())
+        WeatherViewController(viewModel: WeatherViewModel(networkService: services.networkService))
     }
     
     func makeProfileViewController() -> UIViewController {
