@@ -8,10 +8,11 @@
 import Foundation
 
 class WeatherViewModel: IWeatherViewModel {
-
+    
     // MARK: - Private properties
     
     private let networkService: INetworkService
+    private let locationService: ILocationService
     
     // MARK: - Public properties
     
@@ -21,38 +22,29 @@ class WeatherViewModel: IWeatherViewModel {
     
     // MARK: - Lifecycle
     
-    init(networkService: INetworkService) {
+    init(networkService: INetworkService, locationService: ILocationService) {
         self.networkService = networkService
+        self.locationService = locationService
     }
     
     // MARK: - Public methods
     
     func viewDidLoad() {
-        networkService.getWeather { [weak self] result in
-            switch result {
-            case .success(let response):
-                self?.weatherResponse = response 
-                guard let weather = response.weather else {
-                    self?.onError?("Failed to load weather")
-                    return
+            guard let coordinates = locationService.lastLocation else {
+                self.onError?("Unable to determine your location")
+                return
+            }
+            networkService.getWeather(lat: coordinates.latitude, lon: coordinates.longitude) { [weak self] result in
+                switch result {
+                case .success(let response):
+                    self?.weatherResponse = response
+                    self?.onWeatherLoaded?([])
+                case .failure(let error):
+                    self?.onError?(self?.mapErrorToMessage(error: error))
                 }
-                self?.onWeatherLoaded?(weather)
-            case .failure(let error):
-                self?.onError?(self?.mapErrorToMessage(error: error))
             }
         }
     }
-    
-    func fetchImageData(string: String?, completion: @escaping (Data) -> Void) {
-        guard let string = string, let url = URL(string: string) else { return }
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data else { return }
-            completion(data)
-        }
-        .resume()
-    }
-}
 
 private extension WeatherViewModel {
     
