@@ -18,4 +18,6 @@ class Constants {
     static let NewsCellID = "NewsCell"
     static let apiKeyWeather = "4d920f27707f0d437a34c4db31b5cd1a"
     static let weatherBaseUrl = "https://api.openweathermap.org/data/2.5/"
+    static let WeatherCellID = "WeatherCell"
+
 }

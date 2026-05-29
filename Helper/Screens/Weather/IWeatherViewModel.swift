@@ -7,6 +7,10 @@
 
 import Foundation
 
-protocol IWeatherViewModel {
+protocol IWeatherViewModel: AnyObject {
     
+    var onWeatherLoaded: (([Weather]) -> Void)? { get set }
+    var onError: ((String?) -> Void)? { get set }
+    var weatherResponse: WeatherResponse? { get }
+    func viewDidLoad()
 }

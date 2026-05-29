@@ -25,8 +25,8 @@ final class NetworkService: INetworkService {
         }
     }
     
-    func getWeather(completion: @escaping WeatherCompletion) {
-        getRequest(url: Constants.weatherBaseUrl + "weather?q=&appid=" + Constants.apiKeyWeather + "&units=metric") { result in
+    func getWeather( lat: Double, lon: Double, completion: @escaping WeatherCompletion) {
+        getRequest(url:Constants.weatherBaseUrl + "weather?lat=\(lat)&lon=\(lon)&appid=" + Constants.apiKeyWeather + "&units=metric") { result in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
