@@ -28,6 +28,6 @@ class ModuleFactory: IModuleFactory {
     }
     
     func makeProfileViewController() -> UIViewController {
-        ProfileViewController(viewModel: ProfileViewModel())
+        ProfileViewController(viewModel: ProfileViewModel(profile: Profile()))
     }
 }

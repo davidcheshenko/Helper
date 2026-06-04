@@ -14,7 +14,7 @@ protocol IProfileViewModel {
     var userPassword: String { get }
     
     var onDataChanged: (() -> Void)? { get set }
-    var onErrorOccurrad: ((String) -> Void)? { get set }
+    var onError: ((String) -> Void)? { get set }
     
     func saveProfile (name: String, email: String, password: String)
 }
