@@ -18,6 +18,10 @@ class ProfileViewController: UIViewController {
     private let emailLabel = UILabel()
     private let passwordLabel = UILabel()
     
+    private let nameIcon = UIImageView(image: UIImage(systemName: "person.fill"))
+    private let emailIcon = UIImageView(image: UIImage(systemName: "envelope.fill"))
+    private let passwordIcon = UIImageView(image: UIImage(systemName: "lock.fill"))
+    
     private let nameTextField = UITextField()
     private let emailTextField = UITextField()
     private let passwordTextField = UITextField()
@@ -61,7 +65,13 @@ class ProfileViewController: UIViewController {
         bindViewModel()
     }
     
-    // MARK: Private methods
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        view.endEditing(true)
+    }
+}
+
+private extension ProfileViewController {
     
     private func setupLayout() {
         view.addSubview(stackView)
@@ -80,15 +90,35 @@ class ProfileViewController: UIViewController {
         passwordLabel.font = .systemFont(ofSize: 14, weight: .medium)
         passwordLabel.textColor = .black
         
-        stackView.addArrangedSubview(nameLabel)
+        [nameIcon, emailIcon, passwordIcon].forEach { icon in
+            icon.tintColor = .systemBlue
+            icon.contentMode = .scaleAspectFit
+            icon.snp.makeConstraints { make in
+                make.size.equalTo(16)
+            }
+        }
+        
+        let nameStack = UIStackView(arrangedSubviews: [nameIcon, nameLabel])
+        nameStack.axis = .horizontal
+        nameStack.spacing = 6
+        
+        let emailStack = UIStackView(arrangedSubviews: [emailIcon, emailLabel])
+        emailStack.axis = .horizontal
+        emailStack.spacing = 6
+        
+        let passwordStack = UIStackView(arrangedSubviews: [passwordIcon, passwordLabel])
+        passwordStack.axis = .horizontal
+        passwordStack.spacing = 6
+        
+        stackView.addArrangedSubview(nameStack)
         stackView.addArrangedSubview(nameTextField)
         stackView.setCustomSpacing(18, after: nameTextField)
         
-        stackView.addArrangedSubview(emailLabel)
+        stackView.addArrangedSubview(emailStack)
         stackView.addArrangedSubview(emailTextField)
         stackView.setCustomSpacing(18, after: emailTextField)
-        
-        stackView.addArrangedSubview(passwordLabel)
+
+        stackView.addArrangedSubview(passwordStack)
         stackView.addArrangedSubview(passwordTextField)
         
         saveButton.addTarget(self, action: #selector(didTapSave), for: .touchUpInside)
@@ -105,8 +135,9 @@ class ProfileViewController: UIViewController {
         }
         
         saveButton.snp.makeConstraints { make in
-            make.top.equalTo(stackView.snp.bottom).offset(70)
-            make.leading.trailing.equalToSuperview().inset(50)
+            make.top.equalTo(stackView.snp.bottom).offset(50)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(140)
             make.height.equalTo(52)
         }
         
@@ -126,19 +157,15 @@ class ProfileViewController: UIViewController {
     private func bindViewModel() {
         viewModel.onDataChanged = { [weak self] in
             guard let self = self else { return }
-            self.nameTextField.text = self.viewModel.userName
-            self.emailTextField.text = self.viewModel.userEmail
-            self.passwordTextField.text = self.viewModel.userPassword
+            self.nameTextField.text = ""
+            self.emailTextField.text = ""
+            self.passwordTextField.text = ""
             self.showAlert(title: "Успешно", message: "Данные сохранены")
         }
         
         viewModel.onError = { [weak self] error in
             self?.showAlert(title: "Ошибка", message: error)
         }
-        
-        nameTextField.text = viewModel.userName
-        emailTextField.text = viewModel.userEmail
-        passwordTextField.text = viewModel.userPassword
     }
     
     private func showAlert(title: String, message: String) {
