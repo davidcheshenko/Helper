@@ -49,17 +49,17 @@ class ProfileViewModel: IProfileViewModel {
     func saveProfile(name: String, email: String, password: String) {
         
         guard !name.isEmpty else {
-            onError? ("имя не может быть пустым")
+            onError? ("The name cannot be empty")
             return
         }
     
         guard email.contains("@") && email.contains(".") else {
-            onError?("Некорректный формат Email")
+            onError?("Invalid email format Email")
             return
         }
        
         guard password.count < 6 else {
-            onError? ("Пороль должен содержать минимум 6 символов")
+            onError? ("The password must contain at least 6 characters")
             return
         }
         

@@ -12,8 +12,6 @@ class ProfileViewController: UIViewController {
     // MARK: Private properties
     
     private var viewModel: IProfileViewModel
-    private let imageView = UIImageView(image: UIImage(systemName:"person.crop.circle.fill"))
-    
     private let nameLabel = UILabel()
     private let emailLabel = UILabel()
     private let passwordLabel = UILabel()
@@ -21,7 +19,8 @@ class ProfileViewController: UIViewController {
     private let nameIcon = UIImageView(image: UIImage(systemName: "person.fill"))
     private let emailIcon = UIImageView(image: UIImage(systemName: "envelope.fill"))
     private let passwordIcon = UIImageView(image: UIImage(systemName: "lock.fill"))
-    
+    private let imageView = UIImageView(image: UIImage(systemName:"person.crop.circle.fill"))
+
     private let nameTextField = UITextField()
     private let emailTextField = UITextField()
     private let passwordTextField = UITextField()
@@ -73,7 +72,7 @@ class ProfileViewController: UIViewController {
 
 private extension ProfileViewController {
     
-    private func setupLayout() {
+    func setupLayout() {
         view.addSubview(stackView)
         view.addSubview(saveButton)
         view.addSubview(imageView)
@@ -117,7 +116,7 @@ private extension ProfileViewController {
         stackView.addArrangedSubview(emailStack)
         stackView.addArrangedSubview(emailTextField)
         stackView.setCustomSpacing(18, after: emailTextField)
-
+        
         stackView.addArrangedSubview(passwordStack)
         stackView.addArrangedSubview(passwordTextField)
         
@@ -154,21 +153,21 @@ private extension ProfileViewController {
         }
     }
     
-    private func bindViewModel() {
+    func bindViewModel() {
         viewModel.onDataChanged = { [weak self] in
             guard let self = self else { return }
             self.nameTextField.text = ""
             self.emailTextField.text = ""
             self.passwordTextField.text = ""
-            self.showAlert(title: "Успешно", message: "Данные сохранены")
+            self.showAlert(title: "Successfully", message: "Data saved")
         }
         
         viewModel.onError = { [weak self] error in
-            self?.showAlert(title: "Ошибка", message: error)
+            self?.showAlert(title: "Error", message: error)
         }
     }
     
-    private func showAlert(title: String, message: String) {
+    func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
