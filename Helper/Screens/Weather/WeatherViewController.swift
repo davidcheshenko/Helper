@@ -122,7 +122,6 @@ class WeatherViewController: UIViewController {
         }
     }
     
-    
     private func bindViewModel() {
         
         viewModel.onWeatherLoaded = { [weak self] _ in
